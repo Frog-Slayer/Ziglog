@@ -86,23 +86,6 @@ public class MemberServiceImpl implements MemberService{
         return isNotDuplicatedNickname(nickname);
     }
 
-    @Override //테스트에서만 사용됨
-    public Member signUp(String email, String nickname) throws Exception{
-        Member member = memberRepository.save(
-                Member.builder()
-                .email(email)
-                .nickname(nickname)
-                .password(UUID.randomUUID().toString())
-                .build());
-
-        Folder root = folderRepository.save(Folder.builder()
-                    .title("root")
-                    .owner(member)
-                    .build());
-
-        member.getFolders().add(root);
-        return member;
-    }
 
     public boolean isValidNicknameFormat(String nickname){
         String regex = "^[a-zA-Z0-9가-힣]{1,18}$";
@@ -111,5 +94,23 @@ public class MemberServiceImpl implements MemberService{
 
     public boolean isNotDuplicatedNickname(String nickname){
         return !memberRepository.existsMemberByNickname(nickname);
+    }
+
+    @Override //테스트에서만 사용됨
+    public Member signUp(String email, String nickname) throws Exception{
+        Member member = memberRepository.save(
+                Member.builder()
+                        .email(email)
+                        .nickname(nickname)
+                        .password(UUID.randomUUID().toString())
+                        .build());
+
+        Folder root = folderRepository.save(Folder.builder()
+                .title("root")
+                .owner(member)
+                .build());
+
+        member.getFolders().add(root);
+        return member;
     }
 }

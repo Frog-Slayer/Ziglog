@@ -10,6 +10,5 @@ import java.util.Optional;
 
 public interface QuotationRepository extends JpaRepository<Quotation, Long> {
    void deleteQuotationsByIdIn(List<Long> quotationId);
-
    Optional<Quotation> findByStartNoteAndEndNoteAndOwner(Note startNote, Note endNote, Member Owner);
 }
