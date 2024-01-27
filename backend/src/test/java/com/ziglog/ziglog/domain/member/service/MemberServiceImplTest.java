@@ -20,10 +20,12 @@ class MemberServiceImplTest {
     @Autowired
     private MemberServiceImpl memberService;
 
+    private Member member;
+
     @DisplayName("임시 가입")
     @BeforeEach
     public void signUp() throws Exception{
-        memberService.signUp("pj0642@gmail.com", "pys");
+        member = memberService.signUp("pj0642@gmail.com", "pys");
     }
 
     //닉네임 형식 테스트
@@ -31,28 +33,28 @@ class MemberServiceImplTest {
     @Test
     public void nicknameFormatTest_EmptyString(){
         String str = "";
-        assertFalse(memberService.isValidNicknameFormat(str));
+        assertFalse(memberService.isValidNickname(member, str));
     }
 
     @DisplayName("닉네임 형식 테스트 : 12자 초과")
     @Test
     public void nicknameFormatTest_StringOver12(){
         String str = "abcdabcdabcd1";
-        assertFalse(memberService.isValidNicknameFormat(str));
+        assertFalse(memberService.isValidNickname(member, str));
     }
 
     @DisplayName("닉네임 형식 테스트 : 비허용문자")
     @Test
     public void nicknameFormatTest_WithSpecialChar(){
         String str = "abcd_abcdabc";
-        assertFalse(memberService.isValidNicknameFormat(str));
+        assertFalse(memberService.isValidNickname(member, str));
     }
 
     @DisplayName("닉네임 형식 테스트 : 성공사례")
     @Test
     public void nicknameFormatTest_Success(){
         String str = "가힣abcdABCD12";
-        assertTrue(memberService.isValidNicknameFormat(str));
+        assertTrue(memberService.isValidNickname(member, str));
     }
 
     //닉네임 중복 테스트 1)
@@ -60,7 +62,7 @@ class MemberServiceImplTest {
     @Test
     public void nicknameDuplicationCheckTest_Failure(){
         String str = "pys";
-        assertFalse(memberService.isNotDuplicatedNickname(str));
+        assertFalse(memberService.isValidNickname(member, str));
     }
 
     //닉네임 중복 테스트 2
@@ -68,7 +70,7 @@ class MemberServiceImplTest {
     @Test
     public void nicknameDuplicationCheckTest_Success(){
         String str = "ppys";
-        assertTrue(memberService.isNotDuplicatedNickname(str));
+        assertTrue(memberService.isValidNickname(member, str));
     }
 
     //사용자 닉네임 변경 테스트 - 실패
