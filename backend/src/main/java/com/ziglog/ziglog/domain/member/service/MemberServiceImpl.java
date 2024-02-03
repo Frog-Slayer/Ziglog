@@ -75,7 +75,8 @@ public class MemberServiceImpl implements MemberService{
 
     @Override
     public void modifyUserProfile(Member member, String profileUrl) throws UserNotFoundException{
-        member.setProfileUrl(profileUrl);
+        Member m = findUserByEmail(member.getEmail());
+        m.setProfileUrl(profileUrl);
     }
 
     @Override

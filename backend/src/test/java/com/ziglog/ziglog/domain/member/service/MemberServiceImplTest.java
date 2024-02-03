@@ -36,10 +36,10 @@ class MemberServiceImplTest {
         assertFalse(memberService.isValidNickname(member, str));
     }
 
-    @DisplayName("닉네임 형식 테스트 : 12자 초과")
+    @DisplayName("닉네임 형식 테스트 : 18자 초과")
     @Test
-    public void nicknameFormatTest_StringOver12(){
-        String str = "abcdabcdabcd1";
+    public void nicknameFormatTest_StringOver18(){
+        String str = "abcdabcdabcd1233333333";
         assertFalse(memberService.isValidNickname(member, str));
     }
 
@@ -58,11 +58,11 @@ class MemberServiceImplTest {
     }
 
     //닉네임 중복 테스트 1)
-    @DisplayName("닉네임 중복 테스트 : 실패")
+    @DisplayName("닉네임 중복 테스트 : 본인 이름으로 성공")
     @Test
     public void nicknameDuplicationCheckTest_Failure(){
         String str = "pys";
-        assertFalse(memberService.isValidNickname(member, str));
+        assertTrue(memberService.isValidNickname(member, str));
     }
 
     //닉네임 중복 테스트 2
